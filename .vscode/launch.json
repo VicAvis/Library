@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+    {
+    "name": "Debug API Gateway",
+    "type": "node",
+    "request": "launch",
+    "program": "${workspaceFolder}/apps/bookstore-api-gateway/src/main.ts",
+    "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+    "preLaunchTask": "tsc: build - tsconfig.json",
+    "sourceMaps": true,
+    "cwd": "${workspaceFolder}",
+    "autoAttachChildProcesses": true,
+    "restart": true,
+    "internalConsoleOptions": "openOnSessionStart"
+    }
+    ]
+    }
