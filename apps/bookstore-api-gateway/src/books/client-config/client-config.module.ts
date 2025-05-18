@@ -11,10 +11,13 @@ import * as joi from 'joi';
             validationSchema: joi.object({
                 USERS_CLIENT_PORT: joi.number().default(3001),
                 BOOKS_CLIENT_PORT: joi.number().default(3002),
+                READING_PROGRESS_MICROSERVICE_PORT: joi.number().default(3003),
+                READING_PROGRESS_MICROSERVICE_HOST: joi.string().default('localhost'), 
             }),
         }),
     ],
     providers: [ClientConfigService],
     exports: [ClientConfigService],
+    
 })
 export class ClientConfigModule {}

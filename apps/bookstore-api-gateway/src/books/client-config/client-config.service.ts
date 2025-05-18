@@ -41,4 +41,23 @@ export class ClientConfigService{
         };
     }
 
+    getReadingProgressClientPort(): number {
+        const port = this.config.get<number>('READING_PROGRESS_MICROSERVICE_PORT');
+        if (port === undefined) {
+          throw new Error('READING_PROGRESS_MICROSERVICE_PORT is not set in the environment');
+        }
+        return port;
+    }
+
+    get readingProgressClientOptions(): ClientOptions {
+        return {
+            transport: Transport.TCP,
+            options: {
+                host: this.config.get<string>('READING_PROGRESS_MICROSERVICE_PORT', 'localhost'), 
+                port: this.getReadingProgressClientPort(),
+            },
+        };
+    }
+
+
 }

@@ -8,4 +8,9 @@ export class BookDto {
   publication_year?: number;
   file_url?: string;
   created_at: Date;
+  total_pages?: number;
+
+  constructor(partial: Partial<BookDto>) {
+    Object.assign(this, partial);
+  }
 }

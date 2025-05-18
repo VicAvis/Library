@@ -1,5 +1,5 @@
 // apps/bookstore-api-gateway/src/books/dto/create-book.dto.ts
-import { IsString, IsNotEmpty, IsOptional, IsInt, IsUrl, Min, MaxLength } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsInt, IsUrl, Min, MaxLength} from 'class-validator';
 
 export class CreateBookDto {
   @IsString()
@@ -29,4 +29,10 @@ export class CreateBookDto {
   @IsOptional()
   @IsUrl()
   file_url?: string;
+  
+  @IsOptional()
+  @IsInt()
+  @Min(1) 
+  total_pages?: number; 
+
 }

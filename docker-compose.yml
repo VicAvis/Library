@@ -1,4 +1,3 @@
-
 version: '3.8'
 services:
   postgres-users:
@@ -27,6 +26,20 @@ services:
       - postgres_books_data:/var/lib/postgresql/data 
     restart: unless-stopped
 
+  postgres-reading-progress: 
+    image: postgres:15
+    container_name: bookstore_postgres_reading_progress
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER_READING:-reading_svc_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_READING:-reading_svc_password}
+      POSTGRES_DB: ${POSTGRES_DB_READING:-reading_progress_db}
+    ports:
+      - "${POSTGRES_PORT_READING:-5435}:5432" 
+    volumes:
+      - postgres_reading_data:/var/lib/postgresql/data 
+    restart: unless-stopped
+
 volumes:
   postgres_users_data:
-  postgres_books_data: 
+  postgres_books_data:
+  postgres_reading_data:

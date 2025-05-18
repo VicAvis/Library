@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule as ApiGatewayUsersModule } from './users/users.module'; // user CRUD module in gateway
 import { AuthModule as ApiGatewayAuthModule } from './auth/auth.module'; 
 import { ClientsModule, Transport } from '@nestjs/microservices'; 
+import { ReadingProgressModule } from './reading-progress/reading-progress.module';
 
 @Module({
   imports: [UsersModule, BooksModule, 
@@ -31,6 +32,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     }),
     ApiGatewayUsersModule,
     ApiGatewayAuthModule,
+    ReadingProgressModule,
   ],
   controllers: [BookstoreApiGatewayController],
   providers: [BookstoreApiGatewayService],

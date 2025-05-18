@@ -1,3 +1,4 @@
+// apps/bookstore-api-gateway/src/books/books.controller.ts
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, ParseUUIDPipe, UsePipes, ValidationPipe, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { BooksService } from './books.service';

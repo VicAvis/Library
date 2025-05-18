@@ -6,7 +6,6 @@ import { BookDto, CreateBookDto, UpdateBookDto, FindBooksFilterDto } from '@app/
 
 @Injectable()
 export class BooksService {
-  private readonly logger = new Logger(BooksService.name);
 
   constructor(
     @InjectRepository(Book)
@@ -23,16 +22,24 @@ export class BooksService {
       publication_year: book.publication_year,
       file_url: book.file_url,
       created_at: book.created_at,
+      total_pages: book.total_pages
     });
   }
 
   async create(createBookDto: CreateBookDto): Promise<BookDto> {
+    const { title } = createBookDto; // (case-insensitive)
+    const existingBook = await this.booksRepository.findOne({ where: { title: ILike(title) } });
+
+    if (existingBook) {
+      throw new BadRequestException(`A book with the title "${title}" already exists.`);
+    }
+
     try {
       const book = this.booksRepository.create(createBookDto);
       const savedBook = await this.booksRepository.save(book);
       return this.mapToBookDto(savedBook);
     } catch (error) {
-      this.logger.error(`Failed to create book: ${error.message}`, error.stack);
+      console.log(`Failed to create book: ${error.message}`, error.stack);
       throw new InternalServerErrorException('Could not create book.');
     }
   }
@@ -82,7 +89,7 @@ export class BooksService {
         const updatedBook = await this.booksRepository.save(bookToUpdate);
         return this.mapToBookDto(updatedBook);
     } catch (error) {
-        this.logger.error(`Failed to update book ${id}: ${error.message}`, error.stack);
+        console.log(`Failed to update book ${id}: ${error.message}`, error.stack);
         throw new InternalServerErrorException('Could not update book.');
     }
   }

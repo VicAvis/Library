@@ -46,6 +46,15 @@
         "tsConfigPath": "libs/contracts/tsconfig.lib.json"
       }
     },
+    "reading-progress": {
+      "type": "application",
+      "root": "apps/reading-progress",
+      "entryFile": "main",
+      "sourceRoot": "apps/reading-progress/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/reading-progress/tsconfig.app.json"
+      }
+    },
     "users": {
       "type": "application",
       "root": "apps/users",
