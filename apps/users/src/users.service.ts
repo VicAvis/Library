@@ -89,7 +89,7 @@ export class UsersService {
   async findOneByEmailWithPassword(email: string): Promise<User | null> {
     console.log(`findOneByEmailWithPassword - Attempting to find user by email: ${email} and select essential fields including role and id.`);
     const user = await this.usersRepository.findOne({
-      where: { email }, // id and role
+      where: { email }, 
       select: ['id', 'email', 'password', 'role', 'firstName', 'lastName', 'age', 'createdAt', 'updatedAt']
     });
 

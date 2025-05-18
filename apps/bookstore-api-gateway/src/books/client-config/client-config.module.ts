@@ -1,3 +1,4 @@
+// apps/bookstore-api-gateway/src/books/client-config/client-config.module.ts
 import { Module } from "@nestjs/common";
 import { ClientConfigService } from "./client-config.service";
 import { ConfigModule } from "@nestjs/config";

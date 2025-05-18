@@ -8,7 +8,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
-import { Roles } from '../../../../libs/common/decorators/roles.decorator'; 
+import { Roles, Role } from '../../../../libs/common/decorators/roles.decorator'; 
 import { RolesGuard } from '../../../../libs/common/guards/roles.guard'; 
 
 @Controller('users')
@@ -24,7 +24,7 @@ create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
 
 @Get()
 @UseGuards(AuthGuard('jwt'), RolesGuard)
-@Roles('admin')
+@Roles(Role.Admin)
 findAll(): Promise<UserDto[]> {
   console.log('Attempting to find all users (admin only)');
   return this.usersService.findAll();
@@ -32,14 +32,14 @@ findAll(): Promise<UserDto[]> {
 
 @Get(':id')
 @UseGuards(AuthGuard('jwt'), RolesGuard) 
-@Roles('user', 'admin') // both user and admin 
+@Roles(Role.Admin)
 findOne(@Param('id', ParseUUIDPipe) id: string): Promise<UserDto> {
   return this.usersService.findOne(id);
 }
 
 @Patch(':id')
 @UseGuards(AuthGuard('jwt'), RolesGuard) 
-@Roles('admin') //  only admin
+@Roles(Role.Admin)//  only admin
 @UsePipes(new ValidationPipe({ transform: true, whitelist: true, forbidNonWhitelisted: true }))
 update(
   @Param('id', ParseUUIDPipe) id: string,
@@ -50,7 +50,7 @@ update(
 
 @Delete(':id')
 @UseGuards(AuthGuard('jwt'), RolesGuard) 
-@Roles('admin')
+@Roles(Role.Admin)
 remove(@Param('id', ParseUUIDPipe) id: string): Promise<{ deleted: boolean; message?: string }> {
   console.log(`Attempting to remove user ${id} (admin only)`);
   return this.usersService.remove(id);

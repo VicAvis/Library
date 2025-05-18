@@ -1,3 +1,4 @@
+// apps/bookstore-api-gateway/src/books/books.module.ts
 import { Module } from '@nestjs/common';
 import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
 import { BooksService } from './books.service';

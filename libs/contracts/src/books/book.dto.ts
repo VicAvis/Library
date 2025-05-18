@@ -1,6 +1,14 @@
 export class BookDto {
-    id: number;
-    title: string;
-    author: string;
-    rating: number;
-} 
+  id: string;
+  title: string;
+  author: string;
+  genre?: string;
+  description?: string;
+  publication_year?: number;
+  file_url?: string;
+  created_at: Date;
+
+  constructor(partial: Partial<BookDto>) {
+    Object.assign(this, partial);
+  }
+}

@@ -24,16 +24,13 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  async validate(payload: any) {
-    console.log(`JwtStrategy received decoded payload: ${JSON.stringify(payload)}`);
-
-    if (!payload || !payload.sub || !payload.email || !payload.role) {
-      console.log(`Invalid token payload structure or missing fields. Sub: ${payload?.sub}, Email: ${payload?.email}, Role: ${payload?.role}. Throwing UnauthorizedException.`);
-      throw new UnauthorizedException('Invalid token payload.');
-    }
-    const typedPayload = payload as JwtPayload;
-
-    console.log(`Token payload validated for user: ${typedPayload.email}, role: ${typedPayload.role}, sub: ${typedPayload.sub}`);
-    return { userId: typedPayload.sub, email: typedPayload.email, role: typedPayload.role };
+async validate(payload: JwtPayload): Promise<any> {
+  console.log('API Gateway JwtStrategy validate method triggered. Payload:', payload);
+  if (!payload || !payload.sub || !payload.email || !payload.role) { 
+      console.log('Invalid payload in JWT Strategy:', payload);
+      throw new UnauthorizedException('Invalid token payload from strategy.');
   }
+  return { userId: payload.sub, email: payload.email, role: payload.role }; 
 }
+}
+

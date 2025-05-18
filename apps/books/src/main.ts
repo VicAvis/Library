@@ -1,3 +1,4 @@
+//apps/books/src/main.ts
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { BooksAppModule } from './books-app.module';

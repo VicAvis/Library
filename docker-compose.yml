@@ -1,17 +1,32 @@
 
+version: '3.8'
 services:
-  postgres-users: # Service name for the users database
-    image: postgres:15 # Using a specific version is good practice
+  postgres-users:
+    image: postgres:15
     container_name: bookstore_postgres_users
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-user} # Use environment variables or defaults
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-      POSTGRES_DB: ${POSTGRES_DB:-users_db}
+      POSTGRES_USER: ${POSTGRES_USER:-user_svc_user} 
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-user_svc_password}
+      POSTGRES_DB: ${POSTGRES_DB_USERS:-users_db}
     ports:
-      - "${POSTGRES_PORT:-5433}:5432" # Map a host port (e.g., 5433) to container's 5432
+      - "${POSTGRES_PORT_USERS:-5433}:5432"
     volumes:
-      - postgres_users_data:/var/lib/postgresql/data # Persist data
+      - postgres_users_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  postgres-books: 
+    image: postgres:15
+    container_name: bookstore_postgres_books
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER_BOOKS:-book_svc_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_BOOKS:-book_svc_password}
+      POSTGRES_DB: ${POSTGRES_DB_BOOKS:-books_db}
+    ports:
+      - "${POSTGRES_PORT_BOOKS:-5434}:5432"
+    volumes:
+      - postgres_books_data:/var/lib/postgresql/data 
     restart: unless-stopped
 
 volumes:
-  postgres_users_data: # Defines the named volume
+  postgres_users_data:
+  postgres_books_data: 

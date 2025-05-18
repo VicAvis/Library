@@ -1,3 +1,4 @@
+//apps/bookstore-api-gateway/src/books/client-config/client-config.service.ts
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from '@nestjs/config';
 import { ClientOptions, Transport } from "@nestjs/microservices";

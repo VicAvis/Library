@@ -1,5 +1,32 @@
+// apps/bookstore-api-gateway/src/books/dto/create-book.dto.ts
+import { IsString, IsNotEmpty, IsOptional, IsInt, IsUrl, Min, MaxLength } from 'class-validator';
+
 export class CreateBookDto {
-    title: string;
-    author: string; 
-    rating: number;
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(255)
+  title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(255)
+  author: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  genre?: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1000)
+  publication_year?: number;
+
+  @IsOptional()
+  @IsUrl()
+  file_url?: string;
 }
