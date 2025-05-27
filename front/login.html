@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login - Super duper library</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+    <div class="login-container">
+        <h1>Super duper library</h1>
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="password">
+            </div>
+
+            <div id="errorMessage" class="error-message"> </div>
+            <button type="submit" id="loginButton">Login</button>
+        </form>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>

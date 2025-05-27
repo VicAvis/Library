@@ -1,45 +1,72 @@
-version: '3.8'
 services:
-  postgres-users:
+  postgres_users:
     image: postgres:15
     container_name: bookstore_postgres_users
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-user_svc_user} 
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-user_svc_password}
-      POSTGRES_DB: ${POSTGRES_DB_USERS:-users_db}
+      POSTGRES_USER: users_user 
+      POSTGRES_PASSWORD: users_pass 
+      POSTGRES_DB: users_db 
     ports:
-      - "${POSTGRES_PORT_USERS:-5433}:5432"
+      - "5433:5432"
     volumes:
-      - postgres_users_data:/var/lib/postgresql/data
-    restart: unless-stopped
+      - bookstore_postgres_users_data:/var/lib/postgresql/data
+    networks:
+      - bookstore_network
 
-  postgres-books: 
+  postgres_books:
     image: postgres:15
     container_name: bookstore_postgres_books
     environment:
-      POSTGRES_USER: ${POSTGRES_USER_BOOKS:-book_svc_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_BOOKS:-book_svc_password}
-      POSTGRES_DB: ${POSTGRES_DB_BOOKS:-books_db}
+      POSTGRES_USER: books_user
+      POSTGRES_PASSWORD: books_pass 
+      POSTGRES_DB: books_db 
     ports:
-      - "${POSTGRES_PORT_BOOKS:-5434}:5432"
+      - "5434:5432"
     volumes:
-      - postgres_books_data:/var/lib/postgresql/data 
-    restart: unless-stopped
+      - bookstore_postgres_books_data:/var/lib/postgresql/data
+    networks:
+      - bookstore_network
 
-  postgres-reading-progress: 
+  postgres_reading_progress:
     image: postgres:15
     container_name: bookstore_postgres_reading_progress
     environment:
-      POSTGRES_USER: ${POSTGRES_USER_READING:-reading_svc_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_READING:-reading_svc_password}
-      POSTGRES_DB: ${POSTGRES_DB_READING:-reading_progress_db}
+      POSTGRES_USER: reading_user 
+      POSTGRES_PASSWORD: reading_pass
+      POSTGRES_DB: reading_db 
     ports:
-      - "${POSTGRES_PORT_READING:-5435}:5432" 
+      - "5435:5432"
     volumes:
-      - postgres_reading_data:/var/lib/postgresql/data 
-    restart: unless-stopped
+      - bookstore_postgres_reading_data:/var/lib/postgresql/data
+    networks:
+      - bookstore_network
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_bookstore
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@example.com" 
+      PGADMIN_DEFAULT_PASSWORD: "admin" 
+    ports:
+      - "5050:80" # http://localhost:5050
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - bookstore_network 
+    depends_on:
+      - postgres_users
+      - postgres_books
+      - postgres_reading_progress
+  # ------------------------
+
 
 volumes:
-  postgres_users_data:
-  postgres_books_data:
-  postgres_reading_data:
+  bookstore_postgres_users_data:
+  bookstore_postgres_books_data:
+  bookstore_postgres_reading_data:
+  pgadmin_data: 
+
+networks:
+  bookstore_network: 
+    driver: bridge
